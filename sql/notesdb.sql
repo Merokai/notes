@@ -19,30 +19,30 @@ CREATE TABLE utilisateur (
 
 
 CREATE TABLE administrateur (
-  idUtilisateur int(11) NOT NULL
+  idUtilisateur int(11) NOT NULL,
+  PRIMARY KEY (idUtilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
   
   
 CREATE TABLE apprenant (
-  idApprenant int(11) NOT NULL AUTO_INCREMENT,
-  idUtilisateur int(11) DEFAULT NULL,
+  idUtilisateur int(11) NOT NULL,
   idClasse int(11) NOT NULL,
-  PRIMARY KEY (idApprenant)
+  PRIMARY KEY (idUtilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
   
   
 CREATE TABLE enseignant (
-  idEnseignant int(11) NOT NULL AUTO_INCREMENT,
   idUtilisateur int(11) NOT NULL,
-  PRIMARY KEY (idEnseignant)
+  PRIMARY KEY (idUtilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
   
   
 CREATE TABLE responsablePedagogique (
-  idUtilisateur int(11) NOT NULL
+  idUtilisateur int(11) NOT NULL,
+  PRIMARY KEY (idUtilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
   
@@ -96,7 +96,7 @@ ALTER TABLE responsablePedagogique
 			
 ALTER TABLE evaluation
 	ADD CONSTRAINT evaluation_enseignant
-		FOREIGN KEY (idEnseignant) REFERENCES enseignant (idEnseignant)
+		FOREIGN KEY (idEnseignant) REFERENCES enseignant (idUtilisateur)
 			ON DELETE CASCADE ON UPDATE CASCADE,
 			
 	ADD CONSTRAINT evaluation_classe
@@ -106,7 +106,7 @@ ALTER TABLE evaluation
 			
 ALTER TABLE note
 	ADD CONSTRAINT note_apprenant 
-		FOREIGN KEY (idApprenant) REFERENCES apprenant (idApprenant)
+		FOREIGN KEY (idApprenant) REFERENCES apprenant (idUtilisateur)
 			ON DELETE CASCADE ON UPDATE CASCADE,
 			
 	ADD CONSTRAINT note_evaluation
@@ -135,17 +135,17 @@ INSERT INTO administrateur(idUtilisateur)
 	VALUES
 		(1);
 		
-INSERT INTO apprenant(idApprenant, idUtilisateur, idClasse)
+INSERT INTO apprenant(idUtilisateur, idClasse)
 	VALUES
-		(1, 4, 1),
-		(2, 5, 2),
-		(3, 6, 3),
-		(4, 7, 1),
-		(5, 8, 2);
+		(4, 1),
+		(5, 2),
+		(6, 3),
+		(7, 1),
+		(8, 2);
 		
-INSERT INTO enseignant(idEnseignant, idUtilisateur)
+INSERT INTO enseignant(idUtilisateur)
 	VALUES
-		(1, 3);
+		(3);
 		
 INSERT INTO responsablePedagogique(idUtilisateur)
 	VALUES
@@ -153,17 +153,17 @@ INSERT INTO responsablePedagogique(idUtilisateur)
 		
 INSERT INTO evaluation(idEvaluation, intitule, date, idEnseignant, idClasse)
 	VALUES
-		(1, "SQL", NOW(), 1, 1),
-		(2, "Javascript", NOW(), 1, 2),
-		(3, "HTML/CSS", NOW(), 1, 3),
-		(4, "Java", NOW(), 1, 1),
-		(5, "UML", NOW(), 1, 2),
-		(6, "Algo", NOW(), 1, 3);
+		(1, "SQL", NOW(), 3, 1),
+		(2, "Javascript", NOW(), 3, 2),
+		(3, "HTML/CSS", NOW(), 3, 3),
+		(4, "Java", NOW(), 3, 1),
+		(5, "UML", NOW(), 3, 2),
+		(6, "Algo", NOW(), 3, 3);
 		
 INSERT INTO note(idEvaluation, idApprenant, valeur)
 	VALUES
-		(1, 1, 12.25),
-		(1, 4, 16.25),
-		(2, 2, 17.50),
-		(2, 5, 11.00),
-		(3, 3, 14.75);
+		(1, 4, 12.25),
+		(1, 7, 16.25),
+		(2, 5, 17.50),
+		(2, 8, 11.00),
+		(3, 6, 14.75);
